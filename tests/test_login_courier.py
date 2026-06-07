@@ -1,6 +1,7 @@
 import allure
 import requests
 from urls import COURIER_LOGIN_URL
+from data import COURIER_NOT_FOUND, COURIER_NOT_ENOUGH_DATA_LOGIN
 
 class TestLoginCourier:
     def test_login_courier_success(self, courier):
@@ -28,7 +29,7 @@ class TestLoginCourier:
             assert response.status_code == 404
 
         with allure.step("Проверить сообщение об ошибке"):
-            assert response.json()["message"] == "Учетная запись не найдена"
+            assert response.json()["message"] == COURIER_NOT_FOUND
 
     def test_login_courier_without_login(self):
         with allure.step("Отправить запрос без поля login"):
@@ -39,7 +40,7 @@ class TestLoginCourier:
             assert response.status_code == 400
 
         with allure.step("Проверить сообщение об ошибке"):
-            assert response.json()["message"] == "Недостаточно данных для входа"
+            assert response.json()["message"] == COURIER_NOT_ENOUGH_DATA_LOGIN
 
     def test_login_courier_with_nonexistent_user(self):
         with allure.step("Отправить запрос с несуществующим пользователем"):
@@ -50,5 +51,5 @@ class TestLoginCourier:
             assert response.status_code == 404
 
         with allure.step("Проверить сообщение об ошибке"):
-            assert response.json()["message"] == "Учетная запись не найдена"
+            assert response.json()["message"] == COURIER_NOT_FOUND
             
