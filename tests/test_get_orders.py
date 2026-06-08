@@ -4,6 +4,7 @@ import requests
 from urls import ORDERS_URL
 
 class TestGetOrders:
+    @allure.title("Получение списка заказов")
     def test_get_orders(self):
         with allure.step("Отправить запрос на получение списка заказов"):
             response = requests.get(ORDERS_URL)

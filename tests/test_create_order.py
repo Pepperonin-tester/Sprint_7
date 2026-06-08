@@ -11,6 +11,7 @@ class TestCreateOrder:
         ["BLACK", "GREY"],
         []
     ])
+    @allure.title("Создание заказа с цветом {color}")
     def test_create_order(self, color):
         with allure.step(f"Подготовить данные заказа с цветом {color}"):
             payload = ORDER_DATA.copy()

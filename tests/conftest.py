@@ -1,12 +1,7 @@
-import random
-import string
 import pytest
 import requests
 from urls import COURIER_URL, COURIER_LOGIN_URL, ORDERS_URL
-
-def generate_random_string(length=10):
-    letters = string.ascii_letters
-    return ''.join(random.choice(letters) for i in range(length))
+from helpers import generate_random_string
 
 @pytest.fixture
 def courier():
@@ -37,3 +32,11 @@ def courier_id():
     yield courier_id
 
     requests.delete(f"{COURIER_URL}/{courier_id}")
+
+@pytest.fixture
+def delete_courier():
+    payloads = []
+    yield payloads
+    for payload in payloads:
+        courier_id = requests.post(COURIER_LOGIN_URL, json=payload).json()["id"]
+        requests.delete(f"{COURIER_URL}/{courier_id}")
